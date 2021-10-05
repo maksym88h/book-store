@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost/book_store
+    username: book_store
+    password: book_store
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: validate
+
+
+
+#  crnk.enabled=true
+#  crnk.domain-name=http://localhost:8080
+crnk:
+  enabled: true
+  path-prefix: /api
+  default-page-limit: 20
+#  crnk.max-page-limit=1000
+#  crnk.allow-unknown-attributes=false
+#  crnk.return404-on-null=true
+
