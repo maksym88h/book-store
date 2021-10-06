@@ -1,5 +1,6 @@
 package com.proteantecs.bookstore.services;
 
+import ch.qos.logback.classic.spi.IThrowableProxy;
 import com.proteantecs.bookstore.domain.Book;
 import com.proteantecs.bookstore.repositories.BookRepository;
 import lombok.NoArgsConstructor;
@@ -7,11 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
+
     private final BookRepository bookRepository;
 
     @Override
@@ -25,10 +28,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book update(Book book) {
-//        Book byId = bookRepository.findById(book.getId()).orElse( null);
-//        book.setId(byId.getId());
-        return null;
+    public Book update(long id, String name, Double price, String cover, String description) {
+        Book byId = bookRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Book nyma"));
+        return bookRepository.update(id, name, price, cover, description);
     }
 
     @Override

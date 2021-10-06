@@ -9,8 +9,10 @@ import io.crnk.core.resource.list.DefaultResourceList;
 import io.crnk.core.resource.list.ResourceList;
 import io.crnk.core.resource.meta.DefaultPagedMetaInformation;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
-@Component
+@RestController
+@RequestMapping("api/")
 public class BookEndpoint extends ResourceRepositoryBase<Book,Long> {
 
     private final BookService bookService;
@@ -20,6 +22,14 @@ public class BookEndpoint extends ResourceRepositoryBase<Book,Long> {
         this.bookService = bookService;
     }
 
+    @PutMapping("update")
+    public Book update(@RequestParam("id") Long id, @RequestParam String name, @RequestParam Double price,
+                       @RequestParam String cover, @RequestParam String description) {
+        return bookService.update(id, name, price, cover, description);
+    }
+//    public Book update(@RequestBody Book book) {
+//        return bookService.update(book);
+//    }
 
     @Override
     public ResourceList<Book> findAll(QuerySpec querySpec) {
