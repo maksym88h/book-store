@@ -22,13 +22,13 @@ public class BookEndpoint extends ResourceRepositoryBase<Book,Long> {
         this.bookService = bookService;
     }
 
-    @PutMapping("update")
-    public Book update(@RequestParam("id") Long id, @RequestParam String name, @RequestParam Double price,
-                       @RequestParam String cover, @RequestParam String description) {
-        return bookService.update(id, name, price, cover, description);
-    }
-//    public Book update(@RequestBody Book book) {
-//        return bookService.update(book);
+//    @PutMapping("update")
+//    public void update(@RequestParam("id") Long id, @RequestParam String name, @RequestParam Double price,
+//                       @RequestParam String cover, @RequestParam String description) {
+//        bookService.update(id, name, price, cover, description);
+//    }
+//    public void update(@RequestBody Book book) {
+//        bookService.update(book);
 //    }
 
     @Override

@@ -27,11 +27,13 @@ public class BookServiceImpl implements BookService {
         return (List<Book>) bookRepository.findAll();
     }
 
-    @Override
-    public Book update(long id, String name, Double price, String cover, String description) {
-        Book byId = bookRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Book nyma"));
-        return bookRepository.update(id, name, price, cover, description);
-    }
+
+
+//    @Override
+//    public void update(long id, String name, Double price, String cover, String description) {
+//        Book byId = bookRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Book nyma"));
+//        bookRepository.update(id, name, price, cover, description);
+//    }
 
     @Override
     public Book deleteById(Long id) {
