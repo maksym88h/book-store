@@ -12,13 +12,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface BookRepository extends CrudRepository<Book,Long>, QuerydslPredicateExecutor<Book> {
 
-    //@Modifying
-    @Transactional
-    @Query("UPDATE Book b SET b.name = :name, b.price = :price, b.cover = :cover, b.description = :description " +
-            "WHERE b.id = :id")
-    Book update(@Param("id") Long id,
-                @Param("name") String name,
-                @Param("price") Double price,
-                @Param("cover") String cover,
-                @Param("description") String description);
 }
