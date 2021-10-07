@@ -8,15 +8,19 @@ import io.crnk.core.resource.links.DefaultPagedLinksInformation;
 import io.crnk.core.resource.list.DefaultResourceList;
 import io.crnk.core.resource.list.ResourceList;
 import io.crnk.core.resource.meta.DefaultPagedMetaInformation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.function.Predicate;
 
 @RestController
-@RequestMapping("api/")
-public class BookEndpoint extends ResourceRepositoryBase<Book,Long> {
+@RequestMapping("/api")
+@Slf4j
+public class BookEndpoint extends ResourceRepositoryBase<Book, Long> {
 
     private final BookService bookService;
 
@@ -24,15 +28,6 @@ public class BookEndpoint extends ResourceRepositoryBase<Book,Long> {
         super(Book.class);
         this.bookService = bookService;
     }
-
-//    @PutMapping("update")
-//    public void update(@RequestParam("id") Long id, @RequestParam String name, @RequestParam Double price,
-//                       @RequestParam String cover, @RequestParam String description) {
-//        bookService.update(id, name, price, cover, description);
-//    }
-//    public void update(@RequestBody Book book) {
-//        bookService.update(book);
-//    }
 
     @Override
     public ResourceList<Book> findAll(QuerySpec querySpec) {
@@ -52,9 +47,12 @@ public class BookEndpoint extends ResourceRepositoryBase<Book,Long> {
         bookService.deleteById(id);
     }
 
-    @GetMapping("findByName")
-    public Book findByName(@RequestParam(value = "name") String name){
-       return bookService.findByName(name);
+    @GetMapping("/findByName")
+
+    public Book findByName(@RequestBody Book book) {
+        log.info("The method find by name works");
+        Book newBook = bookService.findByName(book.getName());
+        return newBook;
     }
 
 }
