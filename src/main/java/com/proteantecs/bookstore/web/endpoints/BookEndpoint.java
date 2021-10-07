@@ -53,7 +53,7 @@ public class BookEndpoint extends ResourceRepositoryBase<Book,Long> {
     }
 
     @GetMapping("findByName")
-    public Book findByName(@RequestBody String name){
+    public Book findByName(@RequestParam String name){
        return bookService.findByName(name);
     }
 
