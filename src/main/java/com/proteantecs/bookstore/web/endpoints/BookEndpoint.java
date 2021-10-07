@@ -8,8 +8,11 @@ import io.crnk.core.resource.links.DefaultPagedLinksInformation;
 import io.crnk.core.resource.list.DefaultResourceList;
 import io.crnk.core.resource.list.ResourceList;
 import io.crnk.core.resource.meta.DefaultPagedMetaInformation;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.function.Predicate;
 
 @RestController
 @RequestMapping("api/")
@@ -47,6 +50,11 @@ public class BookEndpoint extends ResourceRepositoryBase<Book,Long> {
     @Override
     public void delete(Long id) {
         bookService.deleteById(id);
+    }
+
+    @GetMapping("findByName")
+    public Book findByName(@RequestBody String name){
+       return bookService.findByName(name);
     }
 
 }
