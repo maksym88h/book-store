@@ -47,23 +47,20 @@ repositories {
 }
 
 dependencies {
-    annotationProcessor("com.querydsl:querydsl-apt::jpa",
+    annotationProcessor(
+            "com.querydsl:querydsl-apt::jpa",
             "javax.annotation:javax.annotation-api",
-            "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final")
-
-//            "org.hibernate.javax.persistence:hibernate-jpa-2.1-api Final",
-//            "com.querydsl:querydsl-jpa")
+            "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final"
+    )
 
     implementation 'com.querydsl:querydsl-apt::jpa'
     implementation 'com.querydsl:querydsl-jpa'
-
     implementation("com.querydsl:querydsl-apt::jpa")
-
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
-
+    implementation 'javax.transaction:jta:1.1'
 
     //implementation 'org.flywaydb:flyway-core'
     compileOnly 'org.projectlombok:lombok'
@@ -78,10 +75,6 @@ dependencies {
     implementation 'io.crnk:crnk-setup-spring-boot2'
     implementation 'io.crnk:crnk-home'
     implementation 'io.crnk:crnk-format-plain-json'
-//    compile 'io.crnk:crnk-setup-spring-boot2'
-//    compile 'io.crnk:crnk-format-plain-json'
-//    compile 'io.crnk:crnk-home'
-//    compile 'org.springframework.boot:spring-boot-starter-web'
 }
 
 test {

@@ -16,37 +16,32 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "book")
-@JsonApiResource(type = "book")
-public class Book {
+@Table(name = "author")
+@JsonApiResource(type = "author")
+public class Author {
 
     @Id
     @JsonApiId
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     @JsonProperty
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
 
-    @Column
     @JsonProperty
-    private Double price;
+    @Column(name = "last_name")
+    private String lastName;
 
-    @Column
     @JsonProperty
-    private String cover;
+    private String email;
 
-    @Column
-    @JsonProperty
-    private String description;
-
-    @JsonApiRelation
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+   @JsonApiRelation
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "author_book",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id")
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
     )
-    private Set<Author> authors = new HashSet<>();
+        private Set<Book> books = new HashSet<>();
 }

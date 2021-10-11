@@ -1,27 +1,24 @@
 package com.proteantecs.bookstore.services;
 
-import ch.qos.logback.classic.spi.IThrowableProxy;
 import com.proteantecs.bookstore.domain.Book;
 import com.proteantecs.bookstore.domain.QBook;
+import com.proteantecs.bookstore.repositories.AuthorRepository;
 import com.proteantecs.bookstore.repositories.BookRepository;
 import com.querydsl.jpa.impl.JPAQuery;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.function.Predicate;
 
 @Service
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
-
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -36,18 +33,12 @@ public class BookServiceImpl implements BookService {
         return (List<Book>) bookRepository.findAll();
     }
 
-
-
-//    @Override
-//    public void update(long id, String name, Double price, String cover, String description) {
-//        Book byId = bookRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Book nyma"));
-//        bookRepository.update(id, name, price, cover, description);
-//    }
-
     @Override
     public Book deleteById(Long id) {
-        Book byId = bookRepository.findById(id).orElse(null);
-        bookRepository.deleteById(id);
+        Book byId = bookRepository
+                .findById(id)
+                .orElseThrow(()->  new NoSuchElementException("Can't delete Book"));
+        bookRepository.delete(byId);
         return byId;
     }
 

@@ -11,17 +11,11 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
-
-
-#  crnk.enabled=true
-#  crnk.domain-name=http://localhost:8080
 crnk:
   enabled: true
   path-prefix: /api
   default-page-limit: 20
-#  crnk.max-page-limit=1000
-#  crnk.allow-unknown-attributes=false
-#  crnk.return404-on-null=true
+
 
