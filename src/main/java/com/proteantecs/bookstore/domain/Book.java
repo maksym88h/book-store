@@ -1,14 +1,14 @@
 package com.proteantecs.bookstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.crnk.core.resource.annotations.JsonApiId;
-import io.crnk.core.resource.annotations.JsonApiResource;
+import io.crnk.core.resource.annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Getter
@@ -17,7 +17,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Table(name = "books")
 @JsonApiResource(type = "books")
-public class Book {
+public class Book implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,5 +40,11 @@ public class Book {
     @JsonProperty
     private String description;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonApiRelation(lookUp = LookupIncludeBehavior.NONE, serialize = SerializeType.LAZY)
+    private Author author;
+
+    @Column(name = "author_id", updatable = false, insertable = false)
+    private Long authorId;
 
 }
