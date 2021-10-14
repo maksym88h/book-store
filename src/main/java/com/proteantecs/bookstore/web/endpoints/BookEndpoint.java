@@ -2,6 +2,7 @@ package com.proteantecs.bookstore.web.endpoints;
 
 import com.proteantecs.bookstore.domain.Book;
 import com.proteantecs.bookstore.services.BookService;
+import io.crnk.core.engine.registry.ResourceRegistry;
 import io.crnk.core.queryspec.QuerySpec;
 import io.crnk.core.repository.ResourceRepositoryBase;
 import io.crnk.core.resource.links.DefaultPagedLinksInformation;
@@ -11,6 +12,7 @@ import io.crnk.core.resource.meta.DefaultPagedMetaInformation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/api")
@@ -25,25 +27,39 @@ public class BookEndpoint extends ResourceRepositoryBase<Book, Long> {
 
     @Override
     public ResourceList<Book> findAll(QuerySpec querySpec) {
-        var books = bookService.findAll();
-        var meta = new DefaultPagedMetaInformation();
-        meta.setTotalResourceCount((long) books.size());
-        return new DefaultResourceList<>(books, meta, new DefaultPagedLinksInformation());
+        return querySpec.apply(bookService.findAll());
+    }
+
+    @Override
+    public Class<Book> getResourceClass() {
+        return Book.class;
+    }
+
+    @Override
+    public Book findOne(Long id, QuerySpec querySpec) {
+        return bookService.findOne(id);
     }
 
     @Override
     public <S extends Book> S save(S resource) {
-        return (S) bookService.save(resource);
+        System.out.println();
+        return (S) bookService.save(resource.getId(), resource);
+    }
+
+    @Override
+    public <S extends Book> S create(S resource) {
+        System.out.println();
+        return (S) bookService.create(resource);
     }
 
     @Override
     public void delete(Long id) {
-        bookService.deleteById(id);
+        bookService.delete(id);
     }
 
     @GetMapping("/findBookByName")
     public Book findByName(@RequestBody Book book) {
-        Book newBook = bookService.findByName(book.getName());
+        Book newBook = bookService.findOneByName(book.getName());
         return newBook;
     }
 }

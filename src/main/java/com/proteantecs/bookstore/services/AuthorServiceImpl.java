@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -17,15 +16,27 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
 
-    private final AuthorRepository authorRepository;
-
     @PersistenceContext
     private EntityManager entityManager;
+    private final AuthorRepository authorRepository;
 
     @Override
-    public Author save(Author author) {
-
+    public Author create(Author author) {
         return authorRepository.save(author);
+    }
+
+    @Override
+    public Author save(Long id, Author author) {
+        author.setId(id);
+        return authorRepository.save(author);
+    }
+
+    @Override
+    public Author findOne(Long id) {
+        System.out.println();
+        return authorRepository
+                .findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Didn't find element with id: {findOne Author}"));
     }
 
     @Override
@@ -34,20 +45,16 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author deleteById(Long id) {
-        Author authorById = authorRepository
-                .findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Can't delete author"));
-        authorRepository.delete(authorById);
-        return authorById;
+    public void delete(Long id) {
+        authorRepository.delete(findOne(id));
     }
 
     @Override
-    public Author findByName(String firstName) {
-        QAuthor qAuthor = QAuthor.author;
-        JPAQuery<Object> query = new JPAQuery<>(entityManager);
-        query.from(qAuthor).where(qAuthor.firstName.eq(firstName)).distinct();
-        List<Object> b1 = query.fetch();
-        return (Author) b1.get(0);
+    public Author findOneByName(String name) {
+        var qAuthor = QAuthor.author;
+        var query = new JPAQuery(entityManager);
+        query.from(qAuthor).where(qAuthor.lastName.eq(name)).distinct();
+        var c1 = query.fetch();
+        return (Author) c1.get(0);
     }
 }

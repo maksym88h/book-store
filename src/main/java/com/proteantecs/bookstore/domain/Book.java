@@ -1,14 +1,12 @@
 package com.proteantecs.bookstore.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.crnk.core.resource.annotations.JsonApiId;
-import io.crnk.core.resource.annotations.JsonApiRelation;
-import io.crnk.core.resource.annotations.JsonApiResource;
+import io.crnk.core.resource.annotations.*;
 import lombok.*;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Getter
@@ -16,8 +14,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "book")
-@JsonApiResource(type = "book")
+@JsonApiResource(type = "book", resourcePath = "books")
 public class Book {
 
     @Id
@@ -42,11 +39,11 @@ public class Book {
     private String description;
 
     @JsonApiRelation
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(
             name = "author_book",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
-    private Set<Author> authors = new HashSet<>();
+    private List<Author> authors= new ArrayList<>();
 }

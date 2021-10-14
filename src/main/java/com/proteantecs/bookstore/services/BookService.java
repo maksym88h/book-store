@@ -3,12 +3,19 @@ package com.proteantecs.bookstore.services;
 import com.proteantecs.bookstore.domain.Book;
 
 import java.util.List;
-import java.util.function.Predicate;
-
 
 public interface BookService {
-    Book save(Book book);
+
+    Book create(Book book);
+
+    Book save(Long id, Book book);
+
+    Book findOne(Long id);
+
     List<Book> findAll();
-    Book deleteById(Long id);
-    Book findByName(String name);
+
+    void delete(Long bookId);
+
+    Book findOneByName(String name);
+
 }

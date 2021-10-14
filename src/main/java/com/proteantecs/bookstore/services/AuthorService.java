@@ -1,16 +1,22 @@
 package com.proteantecs.bookstore.services;
 
 import com.proteantecs.bookstore.domain.Author;
+import com.proteantecs.bookstore.domain.Author;
+
 import java.util.List;
 
 public interface AuthorService {
 
-    Author save(Author author);
+    Author create(Author author);
+
+    Author save(Long id, Author author);
+
+    Author findOne(Long id);
 
     List<Author> findAll();
 
-    Author deleteById(Long id);
+    void delete(Long bookId);
 
-    Author findByName(String firstName);
+    Author findOneByName(String name);
 
 }

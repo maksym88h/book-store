@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 777
 
 spring:
   datasource:
@@ -17,5 +17,7 @@ crnk:
   enabled: true
   path-prefix: /api
   default-page-limit: 20
-
+  max-page-limit: 1000
+  allow-unknown-attributes: false
+  return404-on-null: true
 
