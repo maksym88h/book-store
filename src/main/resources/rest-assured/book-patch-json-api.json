@@ -1,0 +1,12 @@
+{
+  "data": {
+    "type": "book",
+    "attributes": {
+      "name": "xxxxxxxxxxxxxxxx",
+      "price": 100000000.0,
+      "cover": "xxxxxxxxxx",
+      "description": "My description"
+    },
+    "relationships": {}
+  }
+}

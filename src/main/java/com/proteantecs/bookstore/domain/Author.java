@@ -5,13 +5,13 @@ import io.crnk.core.resource.annotations.*;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonApiResource(type = "author", resourcePath = "authors")

@@ -1,0 +1,12 @@
+{
+  "data": {
+    "type": "book",
+    "attributes": {
+      "name": "Stuped programmers !!!",
+      "price": 100.0,
+      "cover": "My cover",
+      "description": "My description"
+    },
+    "relationships": {}
+  }
+}

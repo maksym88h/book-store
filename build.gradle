@@ -16,7 +16,6 @@ group = 'com.proteantecs'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -47,36 +46,49 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.projectlombok:lombok:1.18.20'
     annotationProcessor(
             "com.querydsl:querydsl-apt::jpa",
             "javax.annotation:javax.annotation-api",
             "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final"
     )
 
-    implementation 'com.querydsl:querydsl-apt::jpa'
+    implementation 'com.querydsl:querydsl-apt:5.0.0'
     implementation 'com.querydsl:querydsl-jpa'
     implementation("com.querydsl:querydsl-apt::jpa")
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
-    implementation 'javax.transaction:jta:1.1'
 
+    implementation 'javax.transaction:jta:1.1'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // INSTALL CRNK
     testImplementation 'io.crnk:crnk-client:2.5.20180326220647'
-
-
-    //crnk
-
     implementation 'io.crnk:crnk-setup-spring-boot2'
     implementation 'io.crnk:crnk-home'
     implementation 'io.crnk:crnk-format-plain-json'
+
+    // Testing CRNK
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$JUNIT_VERSION"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:$JUNIT_VERSION"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$JUNIT_VERSION"
+    testImplementation "org.junit.vintage:junit-vintage-engine:$JUNIT_VERSION"
+
+    testImplementation 'com.squareup.okhttp3:okhttp:3.4.1'
+    testImplementation 'com.jayway.restassured:rest-assured:2.9.0'
+    testImplementation 'com.jayway.restassured:json-schema-validator:2.9.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.0.3.RELEASE'
+    testImplementation 'commons-io:commons-io:1.3.2'
 }
 
 test {
     useJUnitPlatform()
 }
+
+

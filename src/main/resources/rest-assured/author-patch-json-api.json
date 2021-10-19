@@ -1,0 +1,11 @@
+{
+  "data": {
+    "type": "author",
+    "attributes": {
+      "firstName": "yyyyyyy",
+      "lastName": "yyyyyyyyyyyyyyyy",
+      "email": "yyyy@yyyy.com"
+    },
+    "relationships": {}
+  }
+}

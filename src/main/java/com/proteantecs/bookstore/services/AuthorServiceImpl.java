@@ -33,10 +33,9 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author findOne(Long id) {
-        System.out.println();
         return authorRepository
                 .findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Didn't find element with id: {findOne Author}"));
+                .orElseThrow(() -> new NoSuchElementException("Didn't find element with id: "+id));
     }
 
     @Override
