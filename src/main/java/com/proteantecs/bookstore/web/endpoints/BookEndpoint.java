@@ -1,6 +1,7 @@
 package com.proteantecs.bookstore.web.endpoints;
 
 import com.proteantecs.bookstore.domain.Book;
+import com.proteantecs.bookstore.services.AuthorService;
 import com.proteantecs.bookstore.services.BookService;
 import io.crnk.core.queryspec.QuerySpec;
 import io.crnk.core.repository.ResourceRepositoryBase;
@@ -9,37 +10,39 @@ import io.crnk.core.resource.list.DefaultResourceList;
 import io.crnk.core.resource.list.ResourceList;
 import io.crnk.core.resource.meta.DefaultPagedMetaInformation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.querydsl.binding.QuerydslPredicate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.function.Predicate;
+import java.util.Collection;
+import java.util.List;
 
-@RestController
-@RequestMapping("/api")
+
 @Slf4j
+@Component
 public class BookEndpoint extends ResourceRepositoryBase<Book, Long> {
 
     private final BookService bookService;
+    private final AuthorService authorService;
 
-    public BookEndpoint(BookService bookService) {
+    public BookEndpoint(BookService bookService,AuthorService authorService) {
         super(Book.class);
         this.bookService = bookService;
+        this.authorService = authorService;
     }
 
     @Override
     public ResourceList<Book> findAll(QuerySpec querySpec) {
-        var books = bookService.findAll();
-        var meta = new DefaultPagedMetaInformation();
-        meta.setTotalResourceCount((long) books.size());
-        return new DefaultResourceList<>(books, meta, new DefaultPagedLinksInformation());
+        if (querySpec.getFilters().size() <= 0){
+            return querySpec.apply(bookService.findAll());
+        }
+        else {
+            Book bookByName = bookService.getBookByName(querySpec.getFilters().get(0).getValue().toString());
+             return new DefaultResourceList<>(List.of(bookByName), new DefaultPagedMetaInformation(), new DefaultPagedLinksInformation());
+        }
     }
 
     @Override
-    public <S extends Book> S save(S resource) {
-        return (S) bookService.save(resource);
+    public Book save(Book book) {
+        return bookService.save(book);
     }
 
     @Override
@@ -47,12 +50,14 @@ public class BookEndpoint extends ResourceRepositoryBase<Book, Long> {
         bookService.deleteById(id);
     }
 
-    @GetMapping("/findByName")
-
-    public Book findByName(@RequestBody Book book) {
-        log.info("The method find by name works");
-        Book newBook = bookService.findByName(book.getName());
-        return newBook;
+    @Override
+    public Book findOne(Long id, QuerySpec querySpec) {
+        return bookService.findOne(id);
     }
 
+    @Override
+    public ResourceList<Book> findAll(Collection<Long> ids, QuerySpec querySpec) {
+        var books = bookService.findAll();
+        return querySpec.apply(books);
+    }
 }
